@@ -1,0 +1,19 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<h2>My Applications</h2>
+	<div th:each="a : ${applications}">
+		<h4 th:text="${a.job.title}">Job</h4>
+		<p>
+			Status: <span th:text="${a.status}">SUBMITTED</span>
+		</p>
+		<p>
+			<em th:text="${a.coverLetter}">CL</em>
+		</p>
+		<hr>
+	</div>
+	<p>
+		<a th:href="@{/}">Home</a>
+	</p>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+	<h2>Job Portal</h2>
+	<form method="get" th:action="@{/}">
+		<input name="q" th:value="${q}" placeholder="Search title or location">
+		<button>Search</button>
+	</form>
+
+	<div th:if="${#authorization.expression('hasRole(''EMPLOYER'')')}">
+		<p>
+			<a th:href="@{/employer/jobs}">My Job Posts</a> | <a
+				th:href="@{/employer/jobs/new}">Post a Job</a>
+		</p>
+	</div>
+	<div th:if="${#authorization.expression('hasRole(''APPLICANT'')')}">
+		<p>
+			<a th:href="@{/applicant/applications}">My Applications</a>
+		</p>
+	</div>
+	<div sec:authorize="isAuthenticated()">
+		<form th:action="@{/logout}" method="post">
+			<button>Logout</button>
+		</form>
+	</div>
+	<div sec:authorize="!isAuthenticated()">
+		<a th:href="@{/login}">Login</a>
+	</div>
+
+	<h3>Jobs</h3>
+	<div th:each="j : ${jobs}">
+		<h4 th:text="${j.title}">Title</h4>
+		<p th:text="${j.location}">Location</p>
+		<p th:text="${j.description}">desc</p>
+		<div sec:authorize="hasRole('APPLICANT')">
+			<form th:action="@{'/applicant/apply/' + ${j.id}}" method="post">
+				<input name="coverLetter" placeholder="Cover letter (optional)">
+				<button type="submit">Apply</button>
+			</form>
+		</div>
+		<hr>
+	</div>
+</body>
+</html>

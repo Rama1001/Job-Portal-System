@@ -1,0 +1,18 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<h2>Post a Job</h2>
+	<form th:action="@{/employer/jobs}" method="post">
+		<label>Title <input name="title" th:value="${job.title}"></label><br>
+		<label>Location <input name="location"
+			th:value="${job.location}"></label><br> <label>Salary <input
+			name="salary" type="number" step="0.01" th:value="${job.salary}"></label><br>
+		<label>Description <br> <textarea name="description"
+				rows="5" cols="50" th:text="${job.description}"></textarea></label><br>
+		<button type="submit">Save</button>
+	</form>
+	<p>
+		<a th:href="@{/}">Home</a>
+	</p>
+</body>
+</html>
